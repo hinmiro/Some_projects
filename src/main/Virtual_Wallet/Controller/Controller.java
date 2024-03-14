@@ -16,7 +16,9 @@ public class Controller {
         return engine.getFunds();
     }
 
-    public Controller getController(){return this;}
+    public Controller getController() {
+        return this;
+    }
 
     public static void main(String[] args) {
         VirtualWalletLogGui.launch(VirtualWalletLogGui.class);

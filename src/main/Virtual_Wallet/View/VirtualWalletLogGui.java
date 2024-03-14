@@ -4,7 +4,9 @@ import Controller.Controller;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -59,13 +61,23 @@ public class VirtualWalletLogGui extends Application {
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (userField.getText().equals(user) && passField.getText().equals(pass)) {
-                    VirtualWalletGui gui = new VirtualWalletGui(controller);
+                try {
+                    VirtualWalletGui gui = new VirtualWalletGui(); // Bypass login
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/virtualwallet.fxml"));
+                    Parent root = fxmlLoader.load();
+                    Stage stage1 = new Stage();
+                    stage1.setScene(new Scene(root));
+                    stage1.show();
                     stage.close();
-                    gui.display();
-                }
-                else {
-                    System.out.println("Invalid login credentials");
+                    if (userField.getText().equals(user) && passField.getText().equals(pass)) {
+                        //     VirtualWalletGui gui = new VirtualWalletGui(controller);
+                        stage.close();
+                        gui.display();
+                    } else {
+                        System.out.println("Invalid login credentials");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
